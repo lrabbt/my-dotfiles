@@ -10,6 +10,9 @@ set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 " Plugins
 call plug#begin()
+
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+
 call plug#end()
 
