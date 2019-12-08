@@ -73,6 +73,7 @@ plugins=(
     rsync
     vi-mode
     themes
+    thefuck
 )
 
 source $ZSH/oh-my-zsh.sh
