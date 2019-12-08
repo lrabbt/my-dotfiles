@@ -1,4 +1,6 @@
 prefix: .
 exclude:
   - '*.md'
+  - 'install.sh'
+  - 'uninstall.sh'
 
