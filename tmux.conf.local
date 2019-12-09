@@ -298,6 +298,10 @@ tmux_conf_copy_to_os_clipboard=false
 # use vi-like navigation for files
 set-window-option -g mode-keys vi
 
+# Window options
+set-option -g status-interval 1
+set-option -g automatic-rename-format '#(echo #{pane_current_path} | sed -e "s\`$HOME\`~\`g")'
+
 # List of plugins
 set -g @tpm_plugins '           \
     tmux-plugins/tpm            \
@@ -307,6 +311,4 @@ set -g @tpm_plugins '           \
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run -b '~/.tmux/plugins/tpm/tpm'
-
-
 
