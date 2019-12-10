@@ -14,12 +14,17 @@ set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 " Set path to find files recursively
 set path+=**
 
+" Open NERDTree automatically when vim starts up on opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
 " Plugins
 call plug#begin()
 
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdtree'
 
 call plug#end()
 
