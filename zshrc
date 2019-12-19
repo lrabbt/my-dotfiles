@@ -73,6 +73,8 @@ plugins=(
     rsync
     vi-mode
     themes
+    docker
+    docker-compose
     thefuck
 )
 
