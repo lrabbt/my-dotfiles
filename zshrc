@@ -71,6 +71,13 @@ DISABLE_AUTO_TITLE="true"
 plugins=(
     git
     rsync
+    fasd
+    mvn
+    python
+    pip
+    virtualenv
+    nvm
+    npm
     vi-mode
     themes
     docker
@@ -105,3 +112,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export EDITOR='vim'
+

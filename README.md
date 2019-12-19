@@ -4,27 +4,48 @@
 
 Compact and move useful dotfiles between environments.
 
-## Installation ##
+## Creating links ##
 
-The installation script `install.sh` will install Oh My Zsh! and create simlinks to the dotfiles using [effuse](#effuse).
+First of all, check the [configurations](#configurations) if it's the first installation on the system.
 
-For that to work, check the effuse section on how to install it. After installation, just run
+To create symbolic links for all dotfiles, you can use effuse, or do it by hand.
 
-```sh
-sh install.sh
+If effuse is chosen, just run:
+
+```zsh
+effuse
 ```
 
-## External Modules ##
+Check [this link](https://github.com/programble/effuse) for effuse reference.
 
-### Effuse ###
+## Configurations ##
 
-For simplification purposes, we'll be using effuse to create symbolic links on our dotfiles. Check [this link](https://github.com/programble/effuse) for reference.
+### Zsh ###
+
+Most linux distributions have zsh in their default repositories, for more information check their [official website](https://www.zsh.org/).
+
+#### Oh My Zsh! ####
+
+Oh My Zsh! is being used to manage Zsh plugins and themes. For installation instructions, check their [official website](https://ohmyz.sh/).
+
+### Tmux ###
+
+Install tmux with your package manager, or check their [github page](https://github.com/tmux/tmux/wiki) for more recent versions.
 
 ### Oh My Tmux! ###
 
-Tmux configuration comes from [Oh My Tmux!](https://github.com/gpakosz/.tmux).
+For basic tmux configuration, install [Oh My Tmux!](https://github.com/gpakosz/.tmux).
 
-### Oh My Zsh! ###
+Depending on the theme being used, remember to have installed the [powerline font](https://github.com/powerline/fonts) on your terminal.
 
-Zsh configuration comes from [Oh My Zsh!](https://github.com/ohmyzsh/ohmyzsh).
+### Tpm ###
 
+Used for tmux plugin management, check their [github page](https://github.com/tmux-plugins/tpm).
+
+After installation, run `Prefix + I` to install all plugins configured on `.tmux.conf.local`.
+
+## Vim ##
+
+For Vim installation info, check their [official website](https://www.vim.org/).
+
+Vim configuration is pretty straight foward, it's using [vim-plug](https://github.com/junegunn/vim-plug) to manage plugins. Remember to run `:PlugInstall` the first time you run Vim to install plugins configured on `.vimrc`.
