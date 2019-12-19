@@ -71,6 +71,13 @@ DISABLE_AUTO_TITLE="true"
 plugins=(
     git
     rsync
+    fasd
+    mvn
+    python
+    pip
+    virtualenv
+    nvm
+    npm
     vi-mode
     themes
     thefuck
