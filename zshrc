@@ -80,6 +80,8 @@ plugins=(
     npm
     vi-mode
     themes
+    docker
+    docker-compose
     thefuck
 )
 
