@@ -8,6 +8,9 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Use powerline font on airline theme
+let g:airline_powerline_fonts = 1
+
 " Set tabulation to spaces
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
@@ -25,6 +28,8 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
