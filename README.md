@@ -28,6 +28,10 @@ Most linux distributions have zsh in their default repositories, for more inform
 
 Oh My Zsh! is being used to manage Zsh plugins and themes. For installation instructions, check their [official website](https://ohmyz.sh/).
 
+#### Powerline9K ####
+
+For terminal theme, we'll be using [Powerline9K](https://github.com/Powerlevel9k/powerlevel9k).
+
 ### Tmux ###
 
 Install tmux with your package manager, or check their [github page](https://github.com/tmux/tmux/wiki) for more recent versions.
