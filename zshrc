@@ -70,6 +70,7 @@ DISABLE_AUTO_TITLE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
+    git-extras
     rsync
     fasd
     mvn
