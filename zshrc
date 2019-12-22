@@ -85,6 +85,7 @@ plugins=(
     docker-compose
     tmux
     thefuck
+    my-workspace
 )
 
 source $ZSH/oh-my-zsh.sh
