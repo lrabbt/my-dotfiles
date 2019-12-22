@@ -83,6 +83,7 @@ plugins=(
     themes
     docker
     docker-compose
+    tmux
     thefuck
 )
 
