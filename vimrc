@@ -11,6 +11,10 @@ endif
 " Use powerline font on airline theme
 let g:airline_powerline_fonts = 1
 
+" Use dark solarized theme on Vim
+let g:airline_theme='solarized'
+let g:airline_solarized_bg='dark'
+
 " Set tabulation to spaces
 set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
