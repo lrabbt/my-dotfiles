@@ -37,7 +37,7 @@ function _check_temporary_dir_exists() {
 
 function _check_temporary_dir_open() {
     # Check if temporary workspace is open
-    _check_temporary_dir_exists && [[ -n "$MY_WORKSPACE_TMP_LAST_PATH" ]] && [[ "$PWD" = *$(readlink -f "$MY_WORKSPACE_TMP")* ]]
+    _check_temporary_dir_exists && [[ -n "$MY_WORKSPACE_TMP_LAST_PATH" ]] && [[ $(readlink -f $(pwd)) = *$(readlink -f "$MY_WORKSPACE_TMP")* ]]
 }
 
 function _create_temporary_dir() {
