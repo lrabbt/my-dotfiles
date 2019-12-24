@@ -79,6 +79,7 @@ plugins=(
     virtualenv
     nvm
     npm
+    golang
     vi-mode
     themes
     docker
