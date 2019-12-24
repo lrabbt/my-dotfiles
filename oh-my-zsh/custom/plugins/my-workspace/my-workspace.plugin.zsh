@@ -17,13 +17,21 @@ function _configure_workspace_dir() {
     else
         if ! [[ -d "$MY_WORKSPACE_PATH" ]]; then
             echoerr "File named \"$MY_WORKSPACE_PATH\" already exists! Workspace creation failed."
-            return 1
+            return false
         else
             echo "Directory named \"$MY_WORKSPACE_PATH\" already exists! Skipping workspace creation."
         fi
     fi
     
-    return 0
+    # Configure Golang environment
+    if command -v go &> /dev/null; then
+        if [[ -z "$GOPATH" ]]; then
+            export GOPATH="$MY_WORKSPACE_PATH/go"
+            export PATH="$PATH:$GOPATH/bin"
+        fi
+
+        go env -w GOPATH="$GOPATH"
+    fi
 }
 
 function _check_workspace_dir_exists() {
@@ -45,7 +53,7 @@ function _create_temporary_dir() {
     if [[ -z "$MY_WORKSPACE_TMP" ]]; then
         if ! _check_workspace_dir_exists; then
             if ! _configure_workspace_dir; then
-                return 1
+                return false
             fi
         fi
 
@@ -63,7 +71,7 @@ function _create_temporary_dir() {
 
     _open_temporary_dir
 
-    return 0
+    return true
 }
 
 function _delete_temporary_dir() {
@@ -74,10 +82,10 @@ function _delete_temporary_dir() {
 
         rm -rf "$MY_WORKSPACE_TMP"
         echo "Temporary directory removed!"
-        return 0
+        return true
     else
         echoerr "Temporary directory does not exist!"
-        return 1
+        return false
     fi
 }
 
@@ -85,7 +93,7 @@ function _open_temporary_dir() {
     # Check temporary directory existence
     if [[ -z "$MY_WORKSPACE_TMP" ]] || ! [[ -d "$MY_WORKSPACE_TMP" ]]; then
         echoerr "Temporary directory does not exist!"
-        return 1
+        return false
     fi
 
     # Save last path before entering tmp dir
@@ -95,7 +103,7 @@ function _open_temporary_dir() {
     echo "Entering temporary directory!"
     cd "$MY_WORKSPACE_TMP"
 
-    return 0
+    return true
 }
 
 function _close_temporary_dir() {
@@ -105,7 +113,7 @@ function _close_temporary_dir() {
         export MY_WORKSPACE_TMP_LAST_PATH=""
     else
         echoerr "Temporary directory not open!"
-        return 1
+        return false
     fi
 }
 
