@@ -155,6 +155,8 @@ function main() {
 main
 
 # Setting aliases
+alias wsp="cd $MY_WORKSPACE_PATH"
+
 alias tmpn="tmp new"
 alias tmpd="tmp delete"
 
