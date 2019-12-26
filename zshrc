@@ -119,3 +119,7 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 
+# Powerlevel9k configuration
+export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv context dir vcs)
+export POWERLEVEL9K_VIRTUALENV_BACKGROUND='violet'
+
