@@ -129,3 +129,5 @@ eval "$(thefuck --alias)"
 export EDITOR=vim
 export VISUAL=vim
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

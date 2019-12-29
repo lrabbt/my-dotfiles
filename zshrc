@@ -124,3 +124,6 @@ export EDITOR='vim'
 export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv context dir vcs)
 export POWERLEVEL9K_VIRTUALENV_BACKGROUND='violet'
 
+# fzf auto completion and key-bindings
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
