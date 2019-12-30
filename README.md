@@ -15,7 +15,7 @@ Compact and move useful dotfiles between environments.
 
 ### Installation ###
 
-Fisrt of all, clone the project:
+First of all, clone the project:
 
 ```sh
 git clone https://github.com/lrabbt/my-dotfiles.git
