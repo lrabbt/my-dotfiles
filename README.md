@@ -4,21 +4,32 @@
 
 Compact and move useful dotfiles between environments.
 
-## Creating links ##
+## Getting started ##
 
-First of all, check the [configurations](#configurations) if it's the first installation on the system.
+### Requirements ###
 
-To create symbolic links for all dotfiles, you can use effuse, or do it by hand.
+* homebrew/linuxbrew
+* vim (your favourite version)
+* git
+* zsh
 
-If effuse is chosen, just run:
+### Installation ###
 
-```zsh
-effuse
+Fisrt of all, clone the project:
+
+```sh
+git clone https://github.com/lrabbt/my-dotfiles.git
 ```
 
-Check [this link](https://github.com/programble/effuse) for effuse reference.
+There's a convenience script called `install.sh`, which ties the component's installation. Just run it and we're good to go :)
+
+In case you want to install it manually, there is more information about the configuration in the section below. You can use effuse or create the symbolic links by yourself.
 
 ## Configurations ##
+
+### Effuse ###
+
+Check [this link](https://github.com/programble/effuse) for effuse reference.
 
 ### Zsh ###
 
@@ -53,3 +64,4 @@ After installation, run `Prefix + I` to install all plugins configured on `.tmux
 For Vim installation info, check their [official website](https://www.vim.org/).
 
 Vim configuration is pretty straight foward, it's using [vim-plug](https://github.com/junegunn/vim-plug) to manage plugins. Remember to run `:PlugInstall` the first time you run Vim to install plugins configured on `.vimrc`.
+
