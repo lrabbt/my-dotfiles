@@ -71,7 +71,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(
     git
     git-extras
-    git-flow
+    git-flow-avh
     rsync
     fasd
     mvn
