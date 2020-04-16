@@ -1,2 +1,6 @@
 # Neovim Plugins (installed by vim-plug)
 config/nvim/plugged
+
+# tmux plugins (except tpm)
+tmux/plugins/*
+!tmux/plugins/tpm
