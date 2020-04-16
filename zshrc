@@ -91,6 +91,7 @@ plugins=(
     tmux
     thefuck
     my-workspace
+    local
 )
 
 source $ZSH/oh-my-zsh.sh
