@@ -118,7 +118,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # Powerlevel9k configuration
 export POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv context dir vcs)
@@ -126,4 +126,3 @@ export POWERLEVEL9K_VIRTUALENV_BACKGROUND='violet'
 
 # fzf auto completion and key-bindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
