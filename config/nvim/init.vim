@@ -8,10 +8,6 @@ endif
 " Use powerline font on airline theme
 let g:airline_powerline_fonts = 1
 
-" Use dark solarized theme on Vim
-let g:airline_theme='solarized'
-let g:airline_solarized_bg='dark'
-
 " Set tabulation to spaces
 set tabstop=8 softtabstop=0 expandtab shiftwidth=2 smarttab
 autocmd BufNewFile,BufReadPost python setlocal shiftwidth=4
@@ -43,6 +39,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'dylanaraps/wal.vim'
 
 " Code formatting
 Plug 'tpope/vim-surround'
@@ -66,3 +63,4 @@ Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
+colorscheme wal
