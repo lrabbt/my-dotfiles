@@ -87,7 +87,7 @@ tmux_conf_theme_mode_attr='bold'
 
 # status line style
 tmux_conf_theme_status_fg='brightblue'                  # base0
-tmux_conf_theme_status_bg='brightblack'                 # base03
+tmux_conf_theme_status_bg='black'                       # base02
 tmux_conf_theme_status_attr='none'
 
 # terminal title
@@ -109,7 +109,7 @@ tmux_conf_theme_terminal_title='#h ❐ #S ● #I #W'
 #     - #{username}
 #     - #{username_ssh}
 tmux_conf_theme_window_status_fg='brightblue'           # base0
-tmux_conf_theme_window_status_bg='brightblack'          # base03
+tmux_conf_theme_window_status_bg='black'                # base02
 tmux_conf_theme_window_status_attr='none'
 tmux_conf_theme_window_status_format='#I #W'
 #tmux_conf_theme_window_status_format='#{circled_window_index} #W'
@@ -183,13 +183,13 @@ tmux_conf_theme_status_left=' ❐ #S | ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d
 tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} #{?battery_status, #{battery_status},}#{?battery_bar, #{battery_bar},}#{?battery_percentage, #{battery_percentage},} , %R , %d %b | #{username}#{root} | #{hostname} '
 
 # status left style
-tmux_conf_theme_status_left_fg='brightblue,brightblue,brcyan'  # base0, base0, base1
-tmux_conf_theme_status_left_bg='brightblack,black,white'  # base03, base02, base2
+tmux_conf_theme_status_left_fg='black,brightblue,brcyan'  # base02, base0, base1
+tmux_conf_theme_status_left_bg='brightred,black,white'  # orange, base02, base2
 tmux_conf_theme_status_left_attr='bold,none,none'
 
 # status right style
-tmux_conf_theme_status_right_fg='brightcyan,red,brightblue' # base1, red, base0
-tmux_conf_theme_status_right_bg='brightgreen,black,brightblack' # base01, base02, base03
+tmux_conf_theme_status_right_fg='black,red,black' # base02, red, base02
+tmux_conf_theme_status_right_bg='brightgreen,black,brightred' # base01, base02, orange
 tmux_conf_theme_status_right_attr='none,none,bold'
 
 # pairing indicator
