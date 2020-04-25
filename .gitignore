@@ -4,3 +4,6 @@ config/nvim/plugged
 # tmux plugins (except tpm)
 tmux/plugins/*
 !tmux/plugins/tpm
+
+# qutebrowser
+config/qutebrowser/qsettings/QtProject.conf
