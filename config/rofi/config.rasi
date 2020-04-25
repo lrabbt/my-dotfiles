@@ -1,0 +1,7 @@
+configuration {
+  show-icons: true;
+  modi: "window,drun,ssh,combi,switch:~/.config/rofi/scripts/i3_switch_workspace.sh";
+  theme: "~/.cache/wal/colors-rofi-dark.rasi";
+  font: "Hack 12";
+  combi-modi: "window,drun";
+}
