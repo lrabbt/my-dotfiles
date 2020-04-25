@@ -43,6 +43,7 @@ Plug 'dylanaraps/wal.vim'
 
 " Code formatting
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
 " Code compiling
 Plug 'tpope/vim-dispatch'
