@@ -39,6 +39,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
 Plug 'dylanaraps/wal.vim'
 
 " Code formatting
