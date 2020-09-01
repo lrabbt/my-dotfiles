@@ -1,6 +1,6 @@
 " Install vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -14,6 +14,9 @@ autocmd BufNewFile,BufReadPost python setlocal shiftwidth=4
 
 " Set path to find files recursively
 set path+=**
+
+" Save undo file
+set undofile
 
 " Open NERDTree automatically when vim starts up on opening a directory
 autocmd StdinReadPre * let s:std_in=1
@@ -48,6 +51,7 @@ Plug 'tpope/vim-commentary'
 
 " Code compiling
 Plug 'tpope/vim-dispatch'
+Plug 'jalaiamitahl/maven-compiler.vim'
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
