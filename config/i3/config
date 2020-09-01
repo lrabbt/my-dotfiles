@@ -36,7 +36,10 @@ bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# Set wal theme
+# Firefox
+bindsym $mod+b exec firefox
+
+# Set wal theme (on Xresources)
 # Set colors from Xresources
 # Change 'color7' and 'color2' to whatever colors you want i3 to use 
 # from the generated scheme.
@@ -192,7 +195,7 @@ for_window [class=".*"] title_format " >_ %title "
 smart_borders on
 #hide_edge_borders smart_no_gaps
 set $default_outer_gap 15
-set $default_inner_gap 15
+set $default_inner_gap 10
 gaps outer $default_outer_gap
 gaps inner $default_inner_gap
 
@@ -325,9 +328,6 @@ bindsym Control+Shift+Print exec --no-startup-id "maim -s | xclip -se c -t image
 bindsym $mod+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) ~/Imagens/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
 bindsym $mod+Control+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) | xclip -se c -t image/png"
 
-# Background
-exec_always --no-startup-id ~/.fehbg
-
 # Screen lock
 bindsym $mod+Control+l exec lock-screen
 exec xautolock -time 15 -locker lock-screen &
@@ -344,6 +344,9 @@ mode $exit_mode {
   bindsym Escape mode "default"
   bindsym Return mode "default"
 }
+
+# Teams config
+for_window [instance="microsoft teams - preview" class="Microsoft Teams - Preview"] floating enable
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
