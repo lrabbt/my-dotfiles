@@ -1606,10 +1606,12 @@ c.editor.command = ['st', '-e', 'nvim', '-f', '{file}', '-c', 'normal {line}G{co
 
 ## User config
 # Normal mode bindings
-config.bind('yf', 'spawn firefox {url}')
-config.bind('yz', 'spawn st -e nvim \'+Zet {url}\'')
+config.bind(',f', 'spawn firefox {url}')
+config.bind(',z', 'spawn st -e nvim \'+Zet {url}\'')
 
 # Settings
 c.messages.timeout = 5000
 c.scrolling.smooth = True
 c.tabs.background = True
+
+config.source('qutewal.py')
