@@ -81,19 +81,25 @@ plugins=(
     git-flow-avh
     rsync
     fasd
+    ripgrep
+    fd
     mvn
     python
     pip
     virtualenv
     npm
+    nvm
     golang
     vi-mode
     themes
     docker
     docker-compose
+    vagrant
     tmux
     thefuck
     my-workspace
+    invoke
+    task
     local
 )
 
