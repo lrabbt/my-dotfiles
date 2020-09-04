@@ -100,6 +100,7 @@ plugins=(
     my-workspace
     invoke
     task
+    chezmoi
     local
 )
 
