@@ -71,7 +71,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 " Code completion
-Plug 'valloric/youcompleteme'
+Plug 'valloric/youcompleteme', { 'do': './install.py --all --clangd-completer' }
 
 " File searching
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
