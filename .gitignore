@@ -12,3 +12,4 @@ config/qutebrowser/qsettings/QtProject.conf
 config/ranger/bookmarks
 config/ranger/history
 config/ranger/tagged
+Brewfile.lock.json
