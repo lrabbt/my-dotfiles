@@ -101,6 +101,7 @@ plugins=(
     invoke
     task
     chezmoi
+    jq
     local
 )
 
