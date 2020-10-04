@@ -63,6 +63,9 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'jalaiamitahl/maven-compiler.vim'
 
+" Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 " Typescript
 Plug 'leafgarland/typescript-vim'
 
