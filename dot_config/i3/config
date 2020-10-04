@@ -330,7 +330,7 @@ bindsym $mod+Control+Print exec --no-startup-id "maim -i $(xdotool getactivewind
 
 # Screen lock
 bindsym $mod+Control+l exec lock-screen
-exec xautolock -time 15 -locker lock-screen &
+exec xautolock -time 15 -corners 00-0 -locker lock-screen &
 
 # Alternative exit
 set $exit_mode "Exit: [e]xit, [l]ock, [r]eboot, [s]hutdown"
