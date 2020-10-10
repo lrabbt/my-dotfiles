@@ -88,6 +88,7 @@ plugins=(
     pip
     virtualenv
     npm
+    ng
     nvm
     golang
     vi-mode
