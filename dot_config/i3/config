@@ -331,6 +331,10 @@ bindsym Control+Shift+Print exec --no-startup-id "maim -s | xclip -se c -t image
 bindsym $mod+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) ~/Imagens/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
 bindsym $mod+Control+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) | xclip -se c -t image/png"
 
+# Scratchpad
+bindsym $mod+m move to scratchpad
+bindsym $mod+Shift+m scratchpad show
+
 # Screen lock
 bindsym $mod+Control+l exec lock-screen
 exec xautolock -time 15 -corners 00-0 -locker lock-screen &
