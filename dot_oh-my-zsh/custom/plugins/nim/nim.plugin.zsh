@@ -1,0 +1,1 @@
+PATH=~/.nimble/bin:$PATH
