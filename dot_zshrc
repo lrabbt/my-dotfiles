@@ -104,6 +104,8 @@ plugins=(
     chezmoi
     jq
     nim
+    exercism
+    cht.sh
     local
 )
 

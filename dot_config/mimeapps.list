@@ -1,0 +1,15 @@
+[Added Associations]
+text/csv=sublime_text.desktop;
+application/x-x509-ca-cert=sublime_text.desktop;
+application/vnd.ms-excel=vim.desktop;
+
+[Default Applications]
+x-scheme-handler/tg=telegramdesktop.desktop
+x-scheme-handler/postman=PostmanCanary.desktop
+x-scheme-handler/msteams=teams.desktop
+plain/text=nvim.desktop
+inode/directory=ranger.desktop
+x-scheme-handler/discord-360541292578471937=discord-360541292578471937.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+application/pdf=zathura.desktop
