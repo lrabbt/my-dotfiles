@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+if ! type dunst > /dev/null 2>&1; then
+  echo 'Missing "dunst" command.'
+  exit 1
+fi
+
+. ~/.cache/wal/colors.sh
+
+# inject pywal colors into dunst config
+dunstrc=~/.config/dunst/dunstrc
+sed -i "s/background = .*/background = \"$color0\"/g" "$dunstrc"
+sed -i "s/foreground = .*/foreground = \"$color7\"/g" "$dunstrc"
+sed -i "s/frame_color = .*/frame_color = \"$color6\"/g" "$dunstrc"
+
+# Restart dunst with the new color scheme
+killall -q -w dunst
+
+dunst &
