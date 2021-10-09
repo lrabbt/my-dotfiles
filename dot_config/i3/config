@@ -190,13 +190,14 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioStop exec playerctl stop
 
+# Volume control (enable if needed)
+#bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
+#bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
+
 # Gaps
 for_window [class=".*"] border pixel 2
 for_window [class=".*"] title_format " >_ %title "
-#smart_gaps on
-#smart_gaps inverse_outer
 smart_borders on
-#hide_edge_borders smart_no_gaps
 set $default_outer_gap 15
 set $default_inner_gap 10
 gaps outer $default_outer_gap
@@ -335,9 +336,8 @@ bindsym $mod+Control+Print exec --no-startup-id "maim -i $(xdotool getactivewind
 bindsym $mod+m move to scratchpad
 bindsym $mod+Shift+m scratchpad show
 
-# Screen lock
-bindsym $mod+Control+l exec lock-screen
-exec xautolock -time 15 -corners 00-0 -locker lock-screen &
+# Screen lock (uses xss-lock)
+bindsym $mod+Control+l exec xset s activate
 
 # Alternative exit
 set $exit_mode "Exit: [e]xit, [l]ock, [r]eboot, [s]hutdown"
@@ -352,8 +352,29 @@ mode $exit_mode {
   bindsym Return mode "default"
 }
 
+# Notifications
+bindsym $mod+n exec dunstctl close
+bindsym $mod+Shift+n exec dunstctl close-all
+bindsym $mod+Control+n exec dunstctl action
+
+set $dunst_mode "Dunst: [p]revious, [n]ext, [a]ction, [c]ontext, c[l]ose all, [t]oggle pause"
+bindsym $mod+Control+Shift+n mode $dunst_mode
+
+mode $dunst_mode {
+  bindsym p exec dunstctl history-pop
+  bindsym n exec dunstctl close
+  bindsym a exec dunstctl action
+  bindsym c exec dunstctl context
+  bindsym l exec dunstctl close-all
+  bindsym t exec dunstctl set-paused toggle
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+}
+
 # Teams config
-for_window [instance="microsoft teams - preview" class="Microsoft Teams - Preview"] floating enable
+for_window [title="Microsoft Teams Notification"] floating enable
+for_window [title="Microsoft Teams"] floating disable, move to workspace 10
+for_window [title="A carregar o Microsoft Teams"] floating enable, move to workspace 10
 
 # Comms config
 assign [class="Telegram"] workspace 10
@@ -361,11 +382,5 @@ assign [class="discord"] workspace 10
 for_window [class="Firefox" title="WhatsApp"] move to workspace 10
 for_window [class="Google-chrome" title="Microsoft Teams"] move to workspace 10
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-# bar {
-#         status_command i3status
-# }
-
 # Polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id polybar-launch
