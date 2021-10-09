@@ -3,4 +3,4 @@ gopath=(~/workspace/go)
 export GOPATH
 
 typeset -U path
-path=(~/.local/bin $path)
+path=(~/.local/bin ${gopath[1]}/bin $path)
