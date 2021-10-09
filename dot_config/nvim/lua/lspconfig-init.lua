@@ -43,11 +43,19 @@ local on_attach = function(client, bufnr)
       augroup END
     ]], false)
   end
+
+  -- Diagnostics options
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = true,
+  })
 end
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
-local servers = { "gopls", "pyright", "angularls", "tsserver", "nimls" }
+local servers = { "gopls", "pyright", "angularls", "tsserver", "nimls", "rust_analyzer", "ccls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
