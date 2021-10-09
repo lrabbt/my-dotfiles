@@ -1,0 +1,6 @@
+typeset -TU GOPATH gopath
+gopath=(~/workspace/go)
+export GOPATH
+
+typeset -U path
+path=(~/.local/bin $path)
