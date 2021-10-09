@@ -396,5 +396,5 @@ interval = 1
 format-prefix = " "
 format-prefix-font = 2
 format = <label>
-exec = python3.8 ~/.config/polybar/spotify_status.py -f '{artist}: {song}'
+exec = python3 ~/.config/polybar/spotify_status.py -f '{artist}: {song}'
 format-underline = #1db954
