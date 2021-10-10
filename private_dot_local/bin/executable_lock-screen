@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+BACKGROUND_IMAGE=$(< ~/.cache/wal/wal) 
+
+exec i3lock -t -i $BACKGROUND_IMAGE $@

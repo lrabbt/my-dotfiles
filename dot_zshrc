@@ -1,0 +1,95 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Docker config
+export DOCKER_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/docker
+
+# Path to your oh-my-zsh installation.
+export ZSH=${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-zsh
+
+# Disable automatic updates
+zstyle ':omz:update' mode disabled
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Change custom directory for use with chezmoi
+ZSH_CUSTOM=${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-zsh-custom
+
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+    git
+    git-extras
+    git-flow-avh
+    rsync
+    fasd
+    dotenv
+    ripgrep
+    fd
+    bitwarden
+    mvn
+    python
+    pip
+    virtualenv
+    npm
+    ng
+    nvm
+    golang
+    vi-mode
+    themes
+    docker
+    docker-compose
+    vagrant
+    tmux
+    thefuck
+    my-workspace
+    invoke
+    task
+    chezmoi
+    jq
+    nim
+    exercism
+    cargo
+    rust
+    rustup
+    cht.sh
+    local
+    osc-133 # Follow zsh/p10k to see if someone implements it
+    fzf
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# Options
+setopt extendedglob
+
+# Set cdpath
+typeset -U cdpath
+export cdpath=($HOME/workspace)
+
+# Editor
+export EDITOR='nvim'
+
+# Terminal
+export TERMINAL='kitty'
+
+# ls
+alias ls="ls --color=tty --hyperlink=auto"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+# BEGIN_KITTY_SHELL_INTEGRATION
+if test -e "/usr/lib/kitty/shell-integration/kitty.zsh"; then source "/usr/lib/kitty/shell-integration/kitty.zsh"; fi
+# END_KITTY_SHELL_INTEGRATION
