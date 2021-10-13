@@ -325,11 +325,11 @@ mode "$mode_gaps_left" {
 }
 
 # Print
-bindsym Print exec --no-startup-id "maim ~/Imagens/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
-bindsym Shift+Print exec --no-startup-id "maim -s ~/Imagens/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
+bindsym Print exec --no-startup-id "maim ~/Pictures/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
+bindsym Shift+Print exec --no-startup-id "maim -s ~/Pictures/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
 bindsym Control+Print exec --no-startup-id "maim | xclip -se c -t image/png"
 bindsym Control+Shift+Print exec --no-startup-id "maim -s | xclip -se c -t image/png"
-bindsym $mod+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) ~/Imagens/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
+bindsym $mod+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) ~/Pictures/prints/print-$(date +%Y-%m-%d-%H-%M-%S).png"
 bindsym $mod+Control+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) | xclip -se c -t image/png"
 
 # Scratchpad
@@ -372,9 +372,20 @@ mode $dunst_mode {
 }
 
 # Teams config
-for_window [title="Microsoft Teams Notification"] floating enable
-for_window [title="Microsoft Teams"] floating disable, move to workspace 10
-for_window [title="A carregar o Microsoft Teams"] floating enable, move to workspace 10
+assign [class="Microsoft Teams - Preview" window_type="normal"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="dialog"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="utility"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="toolbar"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="splash"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="menu"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="dropdown_menu"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="popup_menu"] → workspace 10
+assign [class="Microsoft Teams - Preview" window_type="tooltip"] → workspace 10
+# assign [class="Microsoft Teams - Preview" window_type="notification"] → workspace 10
+
+for_window [class="Microsoft Teams - Preview"] floating disable
+for_window [class="Microsoft Teams - Preview" window_type="notification"] floating enable
+for_window [class="Microsoft Teams - Preview" title="Loading"] floating enable
 
 # Comms config
 assign [class="Telegram"] workspace 10

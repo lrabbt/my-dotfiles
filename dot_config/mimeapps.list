@@ -3,10 +3,10 @@ text/csv=sublime_text.desktop;
 application/x-x509-ca-cert=sublime_text.desktop;
 application/vnd.ms-excel=vim.desktop;
 application/wps-office.docx=libreoffice-startcenter.desktop;
-x-scheme-handler/tg=userapp-Telegram Desktop-5RENA1.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-5RENA1.desktop;userapp-Telegram Desktop-B7CFB1.desktop;
 
 [Default Applications]
-x-scheme-handler/tg=userapp-Telegram Desktop-5RENA1.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-B7CFB1.desktop
 x-scheme-handler/postman=PostmanCanary.desktop
 x-scheme-handler/msteams=teams.desktop
 plain/text=nvim.desktop
