@@ -91,6 +91,9 @@ Plug 'leafgarland/typescript-vim'
 " Nim
 Plug 'alaviss/nim.nvim'
 
+" Kitty
+Plug 'fladson/vim-kitty'
+
 " Git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
