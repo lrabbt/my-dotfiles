@@ -1,0 +1,186 @@
+#!/usr/bin/python3
+
+import locale
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+
+from datetime import datetime
+
+import subprocess
+import shutil
+import time
+import json
+import os
+
+
+class SwaybarRequestEncoder(json.JSONEncoder):
+    def __init__(self, *args, **kwargs):
+        super(SwaybarRequestEncoder, self).__init__(
+            *args, **kwargs, separators=(",", ":")
+        )
+
+    def default(self, o):
+        if isinstance(o, SwaybarBlock):
+            j = dict()
+            for k, v in o.__dict__.items():
+                if v is not None:
+                    j[k] = v
+            return j
+        else:
+            return super(SwaybarRequestEncoder, self).default(o)
+
+
+class SwaybarBlock(object):
+    def __init__(
+        self,
+        name: str,
+        full_text: str = None,
+        short_text: str = None,
+        color: str = None,
+        background: str = None,
+        border: str = None,
+        border_top: int = None,
+        border_bottom: int = None,
+        border_left: int = None,
+        border_right: int = None,
+        min_width: int | str = None,
+        align: str = None,
+        instance: str = None,
+        urgent: bool = None,
+        separator: bool = None,
+        separator_block_width: int = None,
+        markup: str = None,
+    ):
+        self.name = name
+        self.full_text = full_text
+        self.short_text = short_text
+        self.color = color
+        self.background = background
+        self.border = border
+        self.border_top = border_top
+        self.border_bottom = border_bottom
+        self.border_left = border_left
+        self.border_right = border_right
+        self.min_width = min_width
+        self.align = align
+        self.instance = instance
+        self.urgent = urgent
+        self.separator = separator
+        self.separator_block_width = separator_block_width
+        self.markup = markup
+
+
+class PlayerctlModule(object):
+    def __init__(self, name):
+        self.name = name
+
+    def block(self):
+        playerctl_cmd = shutil.which("playerctl")
+        if playerctl_cmd is None:
+            return None
+
+        p = subprocess.run([playerctl_cmd, "status"], capture_output=True)
+        if p.returncode != 0:
+            return None
+
+        p = subprocess.run(
+            [
+                playerctl_cmd,
+                "metadata",
+                "--format",
+                "Now playing: {{ artist }} - {{ album }} - {{ title }} - {{ playerName }}",
+            ],
+            capture_output=True,
+        )
+        if p.returncode != 0:
+            return None
+
+        text = p.stdout.decode("utf-8")
+        text = text.strip()
+
+        return SwaybarBlock(
+            self.name,
+            full_text=text,
+        )
+
+
+class UnameModule(object):
+    def __init__(self, name) -> None:
+        self.name = name
+
+    def block(self):
+        u = os.uname()
+        text = u.release.split("-")[0]
+        text += " 🐧 "
+        return SwaybarBlock(
+            self.name,
+            full_text=text,
+        )
+
+
+class UptimeModule(object):
+    def __init__(self, name: str) -> None:
+        self.name = name
+
+    def block(self):
+        with open("/proc/uptime", "r") as f:
+            uptime_seconds = float(f.readline().split()[0])
+
+        days, time = divmod(uptime_seconds, 24 * 3600)
+        hours, time = divmod(time, 3600)
+        minutes, seconds = divmod(time, 60)
+
+        if days > 0:
+            fmt = f"{days:2.0f} {hours:02.0f}:{minutes:02.0f}"
+        elif hours > 0:
+            fmt = f"{hours:02.0f}:{minutes:02.0f}"
+        else:
+            fmt = f"{minutes:02.0f}:{seconds:02.0f}"
+
+        fmt += " ↑ "
+
+        return SwaybarBlock(
+            self.name,
+            full_text=fmt,
+        )
+
+
+class DateModule(object):
+    def __init__(self, name: str):
+        self.name = name
+
+    def block(self):
+        now = datetime.now()
+        text = now.strftime("%c")
+
+        return SwaybarBlock(
+            self.name,
+            full_text=text,
+        )
+
+
+def main():
+    generators = [
+        PlayerctlModule("playerctl"),
+        UnameModule("uname"),
+        UptimeModule("uptime"),
+        DateModule("date"),
+    ]
+
+    print('{"version":1}', flush=True)
+    print("[", flush=True)
+    print("[]", flush=True)
+
+    e = SwaybarRequestEncoder()
+    while True:
+        blocks = []
+        for g in generators:
+            block = g.block()
+            if block is not None:
+                blocks.append(block)
+
+        print("," + e.encode(blocks), flush=True)
+
+        time.sleep(1)
+
+
+main()
