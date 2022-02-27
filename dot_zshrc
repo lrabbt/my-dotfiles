@@ -12,7 +12,8 @@ export DOCKER_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/docker
 export ZSH=${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-zsh
 
 # Disable automatic updates
-zstyle ':omz:update' mode disabled
+zstyle ':omz:update' mode disabled # For some reason, this does not work alone
+DISABLE_AUTO_UPDATE=true
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -22,6 +23,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Change custom directory for use with chezmoi
 ZSH_CUSTOM=${XDG_CONFIG_HOME:-$HOME/.config}/oh-my-zsh-custom
+
+# Pyenv plugin configuration
+ZSH_PYENV_VIRTUALENV=false
 
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
@@ -34,8 +38,9 @@ plugins=(
     dotenv
     ripgrep
     fd
-    bitwarden
+    bitwarden-unlock
     mvn
+    pyenv
     python
     pip
     virtualenv
@@ -49,20 +54,11 @@ plugins=(
     docker-compose
     vagrant
     tmux
-    thefuck
-    my-workspace
-    invoke
-    task
-    chezmoi
     jq
-    nim
-    exercism
     cargo
     rust
     rustup
-    cht.sh
     local
-    osc-133 # Follow zsh/p10k to see if someone implements it
     fzf
 )
 
@@ -73,9 +69,20 @@ source $ZSH/oh-my-zsh.sh
 # Options
 setopt extendedglob
 
+# Set named directories
+if type xdg-user-dir > /dev/null; then
+  docs=$(xdg-user-dir DOCUMENTS)
+
+  celeritech=$docs/celeritech/code
+  code=$docs/code
+  aur=$docs/aur
+  : ~celeritech ~code ~aur
+
+  unset docs
+fi
+
 # Set cdpath
 typeset -U cdpath
-export cdpath=($HOME/workspace)
 
 # Editor
 export EDITOR='nvim'
@@ -87,9 +94,11 @@ export TERMINAL='kitty'
 alias ls="ls --color=tty --hyperlink=auto"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [[ $TERM = "linux" ]]; then
+    [[ ! -f ~/.p10k.linux.zsh ]] || source ~/.p10k.linux.zsh
+else
+    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
 
-
-# BEGIN_KITTY_SHELL_INTEGRATION
-if test -e "/usr/lib/kitty/shell-integration/kitty.zsh"; then source "/usr/lib/kitty/shell-integration/kitty.zsh"; fi
-# END_KITTY_SHELL_INTEGRATION
+# Laravel sail
+alias sail="[[ -f sail ]] && bash sail || bash vendor/bin/sail"

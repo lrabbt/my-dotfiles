@@ -1,6 +1,42 @@
+typeset -U path
+
+# Texmf configuration
+TEXMFHOME=${XDG_DATA_HOME:-$HOME/.local/share}/texmf
+export TEXMFHOME
+
+# Hunspell configuration
+typeset -UT DICTIONARY dictionary ","
+dictionary=(pt_BR en_US)
+DICPATH=${XDG_CONFIG_HOME:-$HOME/.config}/hunspell/dicts
+WORDLIST=${XDG_CONFIG_HOME:-$HOME/.config}/hunspell/personal_dict
+export DICTIONARY DICPATH WORDLIST
+
+# Go configuration
 typeset -TU GOPATH gopath
-gopath=(~/workspace/go)
+gopath=(${XDG_DATA_HOME:-$HOME/.local/share}/go)
+path=(${gopath[1]}/bin $path)
 export GOPATH
 
-typeset -U path
-path=(~/.local/bin ${gopath[1]}/bin $path)
+# Rust configuration
+export CARGO_HOME=${XDG_DATA_HOME:-$HOME/.local/share}/cargo
+export RUSTUP_HOME=${XDG_DATA_HOME:-$HOME/.local/share}/rustup
+
+# Pyenv configuration
+PYENV_ROOT=${XDG_DATA_HOME:-$HOME/.local/share}/pyenv
+path=($PYENV_ROOT/bin $path)
+export PYENV_ROOT
+
+eval "$(pyenv init --path)"       # Care here
+eval "$(pyenv virtualenv-init -)" # Care also here
+
+# Wine configuration
+WINEPREFIX=${XDG_DATA_HOME:-$HOME/.local/share}/wine
+export WINEPREFIX
+
+# Vagrant configuration
+VAGRANT_HOME=${XDG_DATA_HOME:-$HOME/.local/share}/vagrant
+export VAGRANT_HOME
+
+# Path configuration
+path=(~/.local/bin $path)
+
