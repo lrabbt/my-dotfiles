@@ -1,1 +1,8 @@
+# Dotenv
 .env
+
+# Pyenv
+.python-version
+
+# Vue LS
+vetur.config.js
