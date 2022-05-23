@@ -72,6 +72,7 @@ return require('packer').startup(function(use)
     requires = { 'rafamadriz/friendly-snippets' },
     config = function()
       require('luasnip.loaders.from_vscode').load()
+      require('luasnip.loaders.from_lua').load()
     end,
   }
   use {
