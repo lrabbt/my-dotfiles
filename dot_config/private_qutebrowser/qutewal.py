@@ -1,29 +1,38 @@
 import json
 import os
 
-qutewal_dynamic_loading = False
+from pathlib import Path
 
-home = os.getenv('HOME')
-colors_relative = '.cache/wal/colors.json'
-daemon_relative = '.config/qutebrowser/qutewald.py'
-colors_absolute = os.path.join(home, colors_relative)
-daemon_absolute = os.path.join(home, daemon_relative)
+from qutebrowser.config.configfiles import ConfigAPI
+from qutebrowser.config.config import ConfigContainer
 
-if os.path.isfile(colors_absolute):
+config: ConfigAPI = config  # type: ignore
+c: ConfigContainer = c  # type: ignore
+
+cache_home = os.getenv("XDG_CACHE_HOME")
+if cache_home is not None:
+    cache_home = Path(cache_home)
+else:
+    cache_home = Path.home() / ".cache"
+
+colors_relative = Path("wal/colors.json")
+colors_absolute = cache_home / colors_relative
+
+if colors_absolute.is_file():
     with open(colors_absolute) as colorfile:
         colors = json.load(colorfile)
-        cursor = colors['special']['cursor']
-        background = colors['special']['background']
-        foreground = colors['special']['foreground']
-        black = colors['colors']['color0']
-        white = colors['colors']['color7']
-        gray = colors['colors']['color8']
-        red = colors['colors']['color1']
-        green = colors['colors']['color2']
-        yellow = colors['colors']['color3']
-        blue = colors['colors']['color4']
-        magenta = colors['colors']['color5']
-        cyan = colors['colors']['color6']
+        cursor = colors["special"]["cursor"]
+        background = colors["special"]["background"]
+        foreground = colors["special"]["foreground"]
+        black = colors["colors"]["color0"]
+        white = colors["colors"]["color7"]
+        gray = colors["colors"]["color8"]
+        red = colors["colors"]["color1"]
+        green = colors["colors"]["color2"]
+        yellow = colors["colors"]["color3"]
+        blue = colors["colors"]["color4"]
+        magenta = colors["colors"]["color5"]
+        cyan = colors["colors"]["color6"]
 
     # Background color of the completion widget category headers.
     # Type: QssColor
@@ -104,7 +113,7 @@ if os.path.isfile(colors_absolute):
     #   - hsv: Interpolate in the HSV color system.
     #   - hsl: Interpolate in the HSL color system.
     #   - none: Don't show a gradient.
-    c.colors.downloads.system.bg = 'none'
+    c.colors.downloads.system.bg = "none"
 
     # Background color for hints. Note that you can use a `rgba(...)` value
     # for transparency.
@@ -173,7 +182,7 @@ if os.path.isfile(colors_absolute):
 
     # # Border used around UI elements in prompts.
     # # Type: String
-    c.colors.prompts.border = '1px solid ' + background
+    c.colors.prompts.border = "1px solid " + background
 
     # Foreground color for prompts.
     # Type: QssColor
@@ -308,7 +317,7 @@ if os.path.isfile(colors_absolute):
     #   - hsv: Interpolate in the HSV color system.
     #   - hsl: Interpolate in the HSL color system.
     #   - none: Don't show a gradient.
-    c.colors.tabs.indicator.system = 'none'
+    c.colors.tabs.indicator.system = "none"
 
     # Background color of unselected odd tabs.
     # Type: QtColor
@@ -334,17 +343,39 @@ if os.path.isfile(colors_absolute):
     # Type: QtColor
     c.colors.tabs.selected.odd.fg = foreground
 
+    # Background color of pinned unselected even tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.even.bg = background
+
+    # Foreground color of pinned unselected even tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.even.fg = foreground
+
+    # Background color of pinned unselected odd tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.odd.bg = background
+
+    # Foreground color of pinned unselected odd tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.odd.fg = foreground
+
+    # Background color of pinned selected even tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.selected.even.bg = blue
+
+    # Foreground color of pinned selected even tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.selected.even.fg = foreground
+
+    # Background color of pinned selected odd tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.selected.odd.bg = blue
+
+    # Foreground color of pinned selected odd tabs.
+    # Type: QtColor
+    c.colors.tabs.pinned.selected.odd.fg = foreground
+
     # Background color for webpages if unset (or empty to use the theme's
     # color)
     # Type: QtColor
     c.colors.webpage.bg = foreground
-
-    if qutewal_dynamic_loading or bool(os.getenv('QUTEWAL_DYNAMIC_LOADING')):
-        import signal
-        import subprocess
-        import prctl
-
-        # start iqutefy to refresh colors on the fly
-        qutewald = subprocess.Popen(
-            [daemon_absolute, colors_absolute],
-            preexec_fn=lambda: prctl.set_pdeathsig(signal.SIGTERM))
