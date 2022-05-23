@@ -1,5 +1,9 @@
 typeset -U path
 
+# Timewarrior (temporary https://github.com/GothenburgBitFactory/timewarrior/issues/207)
+TIMEWARRIORDB=${XDG_CONFIG_HOME:-$HOME/.config}/timewarrior
+export TIMEWARRIORDB
+
 # Texmf configuration
 TEXMFHOME=${XDG_DATA_HOME:-$HOME/.local/share}/texmf
 export TEXMFHOME

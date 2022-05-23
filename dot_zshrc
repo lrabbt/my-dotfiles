@@ -43,6 +43,7 @@ plugins=(
     pyenv
     python
     pip
+    invoke
     virtualenv
     npm
     ng
@@ -55,10 +56,9 @@ plugins=(
     vagrant
     tmux
     jq
-    cargo
     rust
-    rustup
     local
+    batman
     fzf
 )
 
@@ -76,6 +76,7 @@ if type xdg-user-dir > /dev/null; then
   celeritech=$docs/celeritech/code
   code=$docs/code
   aur=$docs/aur
+  fp=$docs/uerj/projeto-final/code
   : ~celeritech ~code ~aur
 
   unset docs
