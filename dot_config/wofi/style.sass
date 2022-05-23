@@ -1,0 +1,69 @@
+$color0: --wofi-color0
+$color1: --wofi-color1
+$color2: --wofi-color2
+$color3: --wofi-color3
+$color4: --wofi-color4
+$color5: --wofi-color5
+$color6: --wofi-color6
+$color7: --wofi-color7
+$color8: --wofi-color8
+$color9: --wofi-color9
+$color10: --wofi-color10
+$color11: --wofi-color11
+$color12: --wofi-color12
+$color13: --wofi-color13
+$color14: --wofi-color14
+$color15: --wofi-color15
+
+$background: $color0
+$foreground: $color7
+
+#window
+  margin: 5px
+  border: 2px solid $color3
+  background-color: $background
+
+#input
+  margin: 5px
+  color: $foreground
+  caret-color: $foreground
+  border: 2px solid $color1
+  border-radius: 0px
+  background-color: $background
+
+  &:focus
+    box-shadow: inset 2px 2px $color4
+
+#inner-box
+  margin: 5px
+  color: $foreground
+  border: 2px solid $background
+  background-color: $background
+
+#outer-box
+  margin: 5px
+  border: 2px solid $background
+  background-color: $background
+
+#scroll
+  margin: 5px
+  border: 2px solid $color1
+  background-color: $background
+
+#text
+  margin: 5px
+  border: 2px solid transparent
+  background-color: transparent
+
+#entry
+  color: $foreground
+  background-color: $background
+
+  &:selected
+    background-color: $color3
+
+    &:focus
+      background-color: $color4
+
+row#entry:selected
+  background-color: $background

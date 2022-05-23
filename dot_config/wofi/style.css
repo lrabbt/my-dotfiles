@@ -1,0 +1,59 @@
+#window {
+  margin: 5px;
+  border: 2px solid --wofi-color3;
+  background-color: --wofi-color0;
+}
+
+#input {
+  margin: 5px;
+  color: --wofi-color7;
+  caret-color: --wofi-color7;
+  border: 2px solid --wofi-color1;
+  border-radius: 0px;
+  background-color: --wofi-color0;
+}
+#input:focus {
+  box-shadow: inset 2px 2px --wofi-color4;
+}
+
+#inner-box {
+  margin: 5px;
+  color: --wofi-color7;
+  border: 2px solid --wofi-color0;
+  background-color: --wofi-color0;
+}
+
+#outer-box {
+  margin: 5px;
+  border: 2px solid --wofi-color0;
+  background-color: --wofi-color0;
+}
+
+#scroll {
+  margin: 5px;
+  border: 2px solid --wofi-color1;
+  background-color: --wofi-color0;
+}
+
+#text {
+  margin: 5px;
+  border: 2px solid transparent;
+  background-color: transparent;
+}
+
+#entry {
+  color: --wofi-color7;
+  background-color: --wofi-color0;
+}
+#entry:selected {
+  background-color: --wofi-color3;
+}
+#entry:selected:focus {
+  background-color: --wofi-color4;
+}
+
+row#entry:selected {
+  background-color: --wofi-color0;
+}
+
+/*# sourceMappingURL=style.css.map */
