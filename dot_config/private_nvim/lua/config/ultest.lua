@@ -1,7 +1,19 @@
 return function()
   local ultest = require('ultest')
+  local wk = require('which-key')
 
   vim.g['test#python#pytest#options'] = '--color=yes'
+
+  local function split_str(inputstr, sep)
+    if sep == nil then
+      sep = '%s'
+    end
+    local t = {}
+    for str in string.gmatch(inputstr, '([^' .. sep .. ']+)') do
+      table.insert(t, str)
+    end
+    return t
+  end
 
   ultest.setup {
     builders = {
@@ -28,7 +40,10 @@ return function()
               if vim.fn.executable('pyenv') == 1 then
                 local prefix = vim.fn.system('pyenv prefix')
                 if vim.v.shell_error == 0 then
-                  return string.gsub(prefix, '%s', '') .. '/bin/python'
+                  local full_prefix = string.gsub(prefix, '%s', '')
+                  local first_path = split_str(full_prefix, ':')[1]
+
+                  return first_path .. '/bin/python'
                 end
               end
 
@@ -73,7 +88,24 @@ return function()
   }
 
   -- Mappings
-  local opts = { silent = true }
-  vim.api.nvim_set_keymap('n', ']t', '<Plug>(ultest-next-fail)', opts)
-  vim.api.nvim_set_keymap('n', '[t', '<Plug>(ultest-prev-fail)', opts)
+  wk.register({
+    [']t'] = { '<Plug>(ultest-next-fail)', 'Jump to next failed test' },
+    ['[t'] = { '<Plug>(ultest-prev-fail)', 'Jump to previous failed test' },
+  }, { noremap = false })
+
+  wk.register({
+    name = '+ultest',
+    t = { '<Plug>(ultest-run-file)', 'Run all tests in a file' },
+    r = { '<Plug>(ultest-run-nearest)', 'Run test closest to the cursor' },
+    l = { '<Plug>(ultest-run-last)', 'Run test(s) that were last run' },
+    s = { '<Plug>(ultest-summary-toggle)', 'Toggle the summary window between open and closed' },
+    q = { '<Plug>(ultest-summary-jump)', "Jump to the summary window (opening if it isn't already)" },
+    e = { '<Plug>(ultest-output-show)', 'Show error output of the nearest test' },
+    E = { '<Plug>(ultest-output-jump)', 'Show error output of the nearest test and jump to it' },
+    a = { '<Plug>(ultest-attach)', "Attach to the nearest test's running process" },
+    p = { '<Plug>(ultest-stop-file)', 'Stop all running jobs for current file' },
+    P = { '<Plug>(ultest-stop-nearest)', 'Stop any running jobs for nearest test' },
+    T = { '<Plug>(ultest-debug)', 'Debug the current file with nvim-dap' },
+    R = { '<Plug>(ultest-debug-nearest)', 'Debug the nearest test with nvim-dap' },
+  }, { prefix = '<leader>t', noremap = false })
 end

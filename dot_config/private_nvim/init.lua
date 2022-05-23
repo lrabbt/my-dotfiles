@@ -21,4 +21,5 @@ vim.o.undofile = true
 -- Completion menu
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
+-- Plugins
 require('plugins')

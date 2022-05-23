@@ -123,6 +123,7 @@ return function()
       '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>',
       'Set Log Point Breakpoint',
     },
+    q = { '<cmd>lua require"dap".clear_breakpoints()<CR>', 'Clear Breakpoints' },
     r = { '<cmd>lua require"dap".repl.open()<CR>', 'Open REPL' },
     l = { '<cmd>lua require"dap".run_last()<CR>', 'Rerun With Last Configuration' },
   }, { prefix = '<leader>d' })

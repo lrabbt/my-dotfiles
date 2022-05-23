@@ -133,6 +133,12 @@ return require('packer').startup(function(use)
   -- Kitty
   use('fladson/vim-kitty')
 
+  -- Rasi
+  use {
+    'Fymyte/rasi.vim',
+    ft = 'rasi',
+  }
+
   -- Git integration
   use('tpope/vim-fugitive')
   use {
@@ -175,6 +181,12 @@ return require('packer').startup(function(use)
         g = { '<cmd>Telescope live_grep<cr>', 'Grep Files' },
         b = { '<cmd>Telescope buffers<cr>', 'Find Buffers' },
         h = { '<cmd>Telescope help_tags<cr>', 'Find Tags' },
+
+        l = {
+          name = '+lsp',
+          a = { '<cmd>Telescope lsp_code_actions<cr>', 'Code actions' },
+          r = { '<cmd>Telescope lsp_references<cr>', 'References' },
+        },
       }, { prefix = '<leader>f' })
     end,
   }
@@ -274,6 +286,7 @@ return require('packer').startup(function(use)
     'rcarriga/vim-ultest',
     requires = { 'vim-test/vim-test' },
     run = ':UpdateRemotePlugins',
+    after = 'which-key.nvim',
     config = require('config.ultest'),
   }
 
