@@ -1,0 +1,18 @@
+icon-path={{ .chezmoi.homeDir }}/.local/share/icons/hicolor
+
+on-button-middle=exec makoctl menu -n "$id" dmenu -p 'Select action: '
+on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
+
+font=Hack Nerd Font
+
+default-timeout=15000
+
+background-color={background}FF
+text-color={foreground}FF
+border-color={color3}FF
+
+[app-name=Spotify]
+on-notify=none
+
+[mode=do-not-disturb]
+invisible=1

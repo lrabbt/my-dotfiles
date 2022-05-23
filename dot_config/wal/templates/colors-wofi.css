@@ -1,0 +1,26 @@
+window {{
+	background-color: {background};
+	color: {color5};
+}}
+
+#entry:nth-child(odd) {{
+	background-color: {background};
+}}
+
+#entry:nth-child(even) {{
+	background-color: {color1};
+}}
+
+#entry:selected {{
+	background-color: {color2};
+}}
+
+#input {{
+	background-color: {color1};
+	color: {color4};
+	border-color: {color2};
+}}
+
+#input:focus {{
+	border-color: {color5};
+}}
