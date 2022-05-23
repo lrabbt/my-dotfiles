@@ -18,10 +18,14 @@ set $term kitty --single-instance --listen-on unix:@mykitty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu wofi --show drun -I -G
+set $menu wofi --show drun --allow-images --insensitive
 
-# Wallpaper
-set $wallpaper ~/Pictures/Wallpapers/0vd23ot4fas71.jpg
+# Fallback Wallpaper
+set $wallpaper ~/Pictures/Wallpapers/tavern-1920-1080.jpg
+
+# Color palette and Wallpaper
+include "$HOME/.cache/wal/colors-sway"
+
 # Lock
 set $lock swaylock -f -i $wallpaper
 
