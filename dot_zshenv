@@ -33,6 +33,10 @@ export PYENV_ROOT
 eval "$(pyenv init --path)"       # Care here
 eval "$(pyenv virtualenv-init -)" # Care also here
 
+# Rlwrap
+RLWRAP_HOME=${XDG_DATA_HOME:-$HOME/.local/share}/rlwrap
+export RLWRAP_HOME
+
 # Wine configuration
 WINEPREFIX=${XDG_DATA_HOME:-$HOME/.local/share}/wine
 export WINEPREFIX
@@ -43,4 +47,3 @@ export VAGRANT_HOME
 
 # Path configuration
 path=(~/.local/bin $path)
-
