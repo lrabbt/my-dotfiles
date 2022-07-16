@@ -73,6 +73,10 @@ return require('packer').startup(function(use)
     config = function()
       require('luasnip.loaders.from_vscode').load()
       require('luasnip.loaders.from_lua').load()
+
+      vim.api.nvim_create_user_command('LuaSnipEdit', function()
+        require('luasnip.loaders').edit_snippet_files {}
+      end, {})
     end,
   }
   use {
@@ -252,13 +256,13 @@ return require('packer').startup(function(use)
       dapui.setup()
 
       dap.listeners.after.event_initialized['dapui_config'] = function()
-        dapui.open()
+        dapui.open {}
       end
       dap.listeners.before.event_terminated['dapui_config'] = function()
-        dapui.close()
+        dapui.close {}
       end
       dap.listeners.before.event_exited['dapui_config'] = function()
-        dapui.close()
+        dapui.close {}
       end
 
       -- Keymaps
@@ -283,12 +287,23 @@ return require('packer').startup(function(use)
       require('nvim-dap-virtual-text').setup()
     end,
   }
+  -- use {
+  --   'rcarriga/vim-ultest',
+  --   requires = { 'vim-test/vim-test' },
+  --   run = ':UpdateRemotePlugins',
+  --   after = 'which-key.nvim',
+  --   config = require('config.ultest'),
+  -- }
   use {
-    'rcarriga/vim-ultest',
-    requires = { 'vim-test/vim-test' },
-    run = ':UpdateRemotePlugins',
-    after = 'which-key.nvim',
-    config = require('config.ultest'),
+    'nvim-neotest/neotest',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-neotest/neotest-python',
+      'nvim-neotest/neotest-go',
+    },
+    after = { 'which-key.nvim', 'nvim-treesitter' },
+    config = require('config.nvim-neotest'),
   }
 
   if packer_bootstrap then

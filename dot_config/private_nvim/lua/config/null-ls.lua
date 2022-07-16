@@ -11,6 +11,9 @@ return function()
         extra_filetypes = { 'blade', 'php', 'css' },
       },
       null_ls.builtins.formatting.google_java_format,
+      null_ls.builtins.formatting.sqlfluff.with {
+        extra_args = { '--dialect', 'ansi' },
+      },
 
       -- Diagnostics
       null_ls.builtins.diagnostics.shellcheck,
