@@ -44,7 +44,7 @@ return function()
       name = 'Listen for Xdebug',
       port = 9003,
       pathMappings = {
-        ['/var/www/html'] = '${workspaceFolder}',
+        ['/app'] = '${workspaceFolder}',
       },
     },
   }

@@ -71,8 +71,8 @@ return require('packer').startup(function(use)
     'L3MON4D3/LuaSnip',
     requires = { 'rafamadriz/friendly-snippets' },
     config = function()
-      require('luasnip.loaders.from_vscode').load()
-      require('luasnip.loaders.from_lua').load()
+      require('luasnip.loaders.from_vscode').lazy_load()
+      require('luasnip.loaders.from_lua').lazy_load()
 
       vim.api.nvim_create_user_command('LuaSnipEdit', function()
         require('luasnip.loaders').edit_snippet_files {}
@@ -109,6 +109,7 @@ return require('packer').startup(function(use)
   use {
     'preservim/nerdtree',
     requires = { 'ryanoasis/vim-devicons', 'Xuyuanp/nerdtree-git-plugin' },
+    cmd = { 'NERDTree' },
   }
 
   -- Languages
@@ -149,9 +150,85 @@ return require('packer').startup(function(use)
   use {
     'lewis6991/gitsigns.nvim',
     requires = { 'nvim-lua/plenary.nvim' },
+    after = { 'which-key.nvim' },
     tag = 'release',
     config = function()
-      require('gitsigns').setup()
+      require('gitsigns').setup {
+        on_attach = function(bufnr)
+          local gs = package.loaded.gitsigns
+          local wk = require('which-key')
+
+          -- Navigation
+          wk.register({
+            [']c'] = {
+              function()
+                if vim.wo.diff then
+                  return ']c'
+                end
+                vim.schedule(function()
+                  gs.next_hunk()
+                end)
+                return '<Ignore>'
+              end,
+              'Next hunk',
+            },
+
+            ['[c'] = {
+              function()
+                if vim.wo.diff then
+                  return '[c'
+                end
+                vim.schedule(function()
+                  gs.prev_hunk()
+                end)
+                return '<Ignore>'
+              end,
+              'Previous hunk',
+            },
+          }, { buffer = bufnr, expr = true })
+
+          -- Actions
+          wk.register({
+            name = '+gitsigns',
+            s = { ':Gitsigns stage_hunk<CR>', 'Stage hunk' },
+            r = { ':Gitsigns reset_hunk<CR>', 'Reset hunk' },
+            S = { gs.stage_buffer, 'Stage buffer' },
+            u = { gs.undo_stage_hunk, 'Undo staged hunk' },
+            R = { gs.reset_buffer, 'Reset buffer' },
+            p = { gs.preview_hunk, 'Preview hunk' },
+            b = {
+              function()
+                gs.blame_line { full = true }
+              end,
+              'Blame current line',
+            },
+            d = { gs.diffthis, 'Diff file' },
+            D = {
+              function()
+                gs.diffthis('~')
+              end,
+              'Diff file',
+            },
+            tb = { gs.toggle_current_line_blame, 'Toggle current line blame' },
+            td = { gs.toggle_deleted, 'Toggle deleted' },
+          }, { buffer = bufnr, prefix = '<leader>h' })
+
+          wk.register({
+            name = '+gitsigns',
+            s = { ':Gitsigns stage_hunk<CR>', 'Stage hunk' },
+            r = { ':Gitsigns reset_hunk<CR>', 'Reset hunk' },
+          }, { buffer = bufnr, prefix = '<leader>h', mode = 'v' })
+
+          -- Text object
+          wk.register({
+            ih = { ':<C-U>Gitsigns select_hunk<CR>', 'inner hunk' },
+          }, { buffer = bufnr, mode = 'o' })
+
+          wk.register({
+            ih = { ':<C-U>Gitsigns select_hunk<CR>', 'inner hunk' },
+          }, { buffer = bufnr, mode = 'x' })
+        end,
+      }
     end,
   }
 
@@ -284,7 +361,7 @@ return require('packer').startup(function(use)
     'theHamsta/nvim-dap-virtual-text',
     after = 'nvim-dap',
     config = function()
-      require('nvim-dap-virtual-text').setup()
+      require('nvim-dap-virtual-text').setup {}
     end,
   }
   -- use {

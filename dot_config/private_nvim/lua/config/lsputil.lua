@@ -1,7 +1,8 @@
 local lsputil = {}
 
-function lsputil.format_range_operator()
+function lsputil.format_range_operator(line)
   local old_func = vim.go.operatorfunc
+
   _G.op_func_formatting = function(type)
     local start = vim.api.nvim_buf_get_mark(0, '[')
     local finish = vim.api.nvim_buf_get_mark(0, ']')
@@ -12,70 +13,84 @@ function lsputil.format_range_operator()
       finish[2] = 0
     end
 
-    vim.lsp.buf.range_formatting({}, start, finish)
+    vim.lsp.buf.format {
+      async = true,
+      range = {
+        ['start'] = start,
+        ['end'] = finish,
+      },
+    }
     vim.go.operatorfunc = old_func
     _G.op_func_formatting = nil
   end
   vim.go.operatorfunc = 'v:lua.op_func_formatting'
 
-  return 'g@'
+  local keys = 'g@'
+  if line then
+    keys = keys .. '_'
+  end
+
+  vim.api.nvim_feedkeys(keys, 'n', false)
 end
 
 function lsputil.lsp_on_attach(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap = true, silent = true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 
   -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
+  if client.server_capabilities.documentFormattingProvider then
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, bufopts)
+  elseif client.server_capabilities.documentRangeFormattingProvider then
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, bufopts)
   end
 
-  if client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap('v', 'gm', ':lua vim.lsp.buf.range_formatting()<CR>', opts)
+  if client.server_capabilities.documentRangeFormattingProvider then
+    vim.keymap.set('v', 'gm', function()
+      vim.lsp.buf.format { async = true }
+    end, bufopts)
 
-    local expropts = { expr = true, silent = true, noremap = true }
-    buf_set_keymap('n', 'gm', "v:lua.require'config.lsputil'.format_range_operator()", expropts)
-    buf_set_keymap('n', 'gmm', "v:lua.require'config.lsputil'.format_range_operator() .. '_'", expropts)
+    local expropts = { expr = true, silent = true, noremap = true, buffer = bufnr }
+    vim.keymap.set('n', 'gm', lsputil.format_range_operator, expropts)
+    vim.keymap.set('n', 'gmm', function()
+      lsputil.format_range_operator(true)
+    end, expropts)
   end
 
   -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.cmd [[
+  if client.server_capabilities.documentHighlight then
+    vim.cmd([[
       hi! LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
       hi! LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
       hi! LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-    ]]
+    ]])
     vim.api.nvim_create_augroup('lsp_document_highlight', {
-      clear = false
+      clear = false,
     })
-    vim.api.nvim_clear_autocmds({
+    vim.api.nvim_clear_autocmds {
       buffer = bufnr,
       group = 'lsp_document_highlight',
-    })
+    }
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
       group = 'lsp_document_highlight',
       buffer = bufnr,

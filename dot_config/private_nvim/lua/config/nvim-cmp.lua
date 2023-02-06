@@ -60,7 +60,6 @@ return function()
       { name = 'luasnip' },
       { name = 'path' },
     }, {
-      { name = 'omni' },
       { name = 'buffer' },
     }),
   }

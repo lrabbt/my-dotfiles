@@ -1,6 +1,7 @@
 return function()
   local lsputil = require('config.lsputil')
   local nvim_lsp = require('lspconfig')
+  local nvim_lsp_util = require('lspconfig.util')
   local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
   -- Use a loop to conveniently both setup defined servers
@@ -13,9 +14,8 @@ return function()
     'ccls',
     'bashls',
     'eslint',
-    'jsonls',
   }
-  local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = cmp_nvim_lsp.default_capabilities()
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = lsputil.lsp_on_attach,
@@ -44,11 +44,18 @@ return function()
     capabilities = capabilities,
   }
 
+  -- jsonls
+  nvim_lsp.jsonls.setup {
+    on_attach = lsputil.lsp_on_attach,
+    capabilities = capabilities,
+    cmd = { 'vscode-json-languageserver', '--stdio' },
+  }
+
   local function on_attach_no_format(client, ...)
     lsputil.lsp_on_attach(client, ...)
 
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
   end
 
   -- lua-language-server
@@ -72,6 +79,7 @@ return function()
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = vim.api.nvim_get_runtime_file('', true),
+          checkThirdParty = false,
         },
         -- Do not send telemetry data containing a randomized but unique identifier
         telemetry = {
@@ -84,10 +92,31 @@ return function()
   }
 
   -- Vue volar
+  local function get_typescript_server_path(root_dir)
+    local global_ts = '/usr/lib/node_modules/typescript/lib'
+    local found_ts = ''
+
+    local function check_dir(path)
+      found_ts = nvim_lsp_util.path.join(path, 'node_modules', 'typescript', 'lib')
+      if nvim_lsp_util.path.exists(found_ts) then
+        return path
+      end
+    end
+
+    if nvim_lsp_util.search_ancestors(root_dir, check_dir) then
+      return found_ts
+    else
+      return global_ts
+    end
+  end
+
   nvim_lsp.volar.setup {
     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
     on_attach = on_attach_no_format,
     capabilities = capabilities,
+    on_new_config = function(new_config, new_root_dir)
+      new_config.init_options.typescript.tsdk = get_typescript_server_path(new_root_dir)
+    end,
   }
 
   -- tsserver
@@ -103,10 +132,8 @@ return function()
   }
 
   -- PyRight
-  local pyright_publish_diagnostics = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    { update_in_insert = false }
-  )
+  local pyright_publish_diagnostics =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = false })
   nvim_lsp.pyright.setup {
     on_attach = lsputil.lsp_on_attach,
     capabilities = capabilities,
